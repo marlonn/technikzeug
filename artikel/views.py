@@ -2,8 +2,9 @@ from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
+from django.db import connection
 
-from .models import Artikel 
+from .models import Artikel
 
 
 class IndexView(generic.ListView):
@@ -12,8 +13,7 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         """Return the last fifteen published articles."""
-        return Artikel.objects.order_by('-datum')[:25]
-
+        return Artikel.objects.order_by('-datum')[:50]
 
 class DetailView(generic.DetailView):
     model = Artikel

@@ -10,12 +10,13 @@ ul {
 .datum {
    padding: 0 3px;
    display: inline-block;
-   width: 100px;
+   width: 125px;
    color: red;
 }
 
 #artikel-text {
    width: 700px;
+   white-space: pre-wrap;
 }
 
 #artikel-datum {
