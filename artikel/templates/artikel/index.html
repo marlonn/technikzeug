@@ -1,0 +1,17 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'artikel/style.css' %}" />
+
+<h3>Artikel</h3>
+
+{% if latest_artikel_list %}
+   <ul>
+   {% for artikel in latest_artikel_list %}
+       <li><a href="/artikel/{{ artikel.a_id }}/">
+	  <span class="datum">{{ artikel.datum }}</span>
+	  {{artikel.titel}}
+       </a></li>
+   {% endfor %}
+   </ul>
+{% else %}
+   <p>No articles found.</p>
+{% endif %}

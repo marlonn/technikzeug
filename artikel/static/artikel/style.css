@@ -1,0 +1,30 @@
+li a {
+   text-decoration: none;
+   color: #040a70;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.datum {
+   padding: 0 3px;
+   display: inline-block;
+   width: 100px;
+   color: red;
+}
+
+#artikel-text {
+   width: 700px;
+}
+
+#artikel-datum {
+   margin-top: 10px;	
+   padding: 5px;
+   color: red;
+}
+
+#artikel-tags {
+   padding: 5px;
+   color: #040a70;
+}
