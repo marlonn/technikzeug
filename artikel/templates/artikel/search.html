@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+{% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'artikel/style.css' %}" />
+    <meta content="text/html">
+    <title>technikzeugs heim</title>
+</head>
+<body>
+<h3>Artikel</h3>
+
+<div id="form-container-suchseite">
+    <form id="searchform" action="" method="get">
+       <button class="searchbutton" type="submit">suchen</button>
+       <input class="searchfield" id="searchbox" name="q"
+              type="text" placeholder="tags durchsuchen">
+    </form>
+</div>
+
+{% if request.GET %}
+    <h4>Ergebnisse f  r tag "{{ request.GET.q }}"</h4>
+{% endif %}
+
+{% if artikel_list %}
+    <ul>
+    {% for artikel in artikel_list %}
+         <li><a href="/artikel/{{ artikel.a_id }}/">
+              <span class="datum">{{ artikel.datum }}</span>
+              {{ artikel.titel }}
+         </a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No articles found.</p>
+{% endif %}
+
+
+</body>
+</html>
