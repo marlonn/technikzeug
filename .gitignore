@@ -1,4 +1,6 @@
 
+*.save
+
 virtualenv/
 
 *.sqlite3
@@ -78,5 +80,3 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-
-

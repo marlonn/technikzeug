@@ -32,19 +32,21 @@ class SearchView(generic.ListView):
 
     def get_queryset(self):
         query = self.request.GET.get('q')
-        #artikel_list.q = self.request.GET.get('q')
         if query:
             query_list = query.split()
-            if len(query.split()) > 1:
-                result = Artikel.objects.filter(
-                            Q(tag__icontains=q) for q in query_list
-                        ).order_by('-datum')
-            else:
-                result = Artikel.objects.filter(
-                            Q(tags__icontains=query)
-                        ).order_by('-datum')
-        else:
+            # if len(query_list) > 1:
+                # this branch does not work. it keeps throwing " 'Q' object has no attribute 'split'"
+                # result = Artikel.objects.filter(
+                #             Q(tags__icontains=item) for item in query_list
+                #         ).order_by('-datum')
+            # else
             result = Artikel.objects.filter(
-                        datum__lte=timezone.now()
-                    ).order_by('-datum')[:80]
+                        Q(tags__icontains=query)  |                 Q(titel__icontains=query) |
+                        Q(text__icontains=query)
+                    ).order_by('-datum')
+        else:
+            # result = Artikel.objects.filter(
+            #             datum__lte=timezone.now()
+            #         ).order_by('-datum')[:80]
+            result = Artikel.objects.all().order_by('-datum')[:80]
         return result
