@@ -13,12 +13,12 @@
     <form id="searchform" action="" method="get">
        <button class="searchbutton" type="submit">suchen</button>
        <input class="searchfield" id="searchbox" name="q"
-              type="text" placeholder="tags durchsuchen">
+              type="text" placeholder="enter search term">
     </form>
 </div>
 
 {% if request.GET %}
-    <h4>Ergebnisse f  r tag "{{ request.GET.q }}"</h4>
+    <h4>Ergebnisse für tag "{{ request.GET.q }}"</h4>
 {% endif %}
 
 {% if artikel_list %}
@@ -26,12 +26,12 @@
     {% for artikel in artikel_list %}
          <li><a href="/artikel/{{ artikel.a_id }}/">
               <span class="datum">{{ artikel.datum }}</span>
-              {{ artikel.titel }}
+              {{ artikel.titel }} - {{ artikel.tags }}
          </a></li>
     {% endfor %}
     </ul>
 {% else %}
-    <p>No articles found.</p>
+    <p>No articles found. Do not use more than one search term.</p>
 {% endif %}
 
 </body>
