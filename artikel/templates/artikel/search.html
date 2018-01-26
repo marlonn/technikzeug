@@ -7,32 +7,39 @@
     <title>technikzeugs heim</title>
 </head>
 <body>
-<h3>Artikel</h3>
 
-<div id="form-container-suchseite">
-    <form id="searchform" action="" method="get">
-       <button class="searchbutton" type="submit">suchen</button>
-       <input class="searchfield" id="searchbox" name="q"
-              type="text" placeholder="enter search term">
-    </form>
-</div>
+<div id="search-container">
 
-{% if request.GET %}
-    <h4>Ergebnisse für tag "{{ request.GET.q }}"</h4>
-{% endif %}
+  <h3>Technikzeugs - Artikel</h3>
 
-{% if artikel_list %}
-    <ul>
-    {% for artikel in artikel_list %}
-         <li><a href="/artikel/{{ artikel.a_id }}/">
-              <span class="datum">{{ artikel.datum }}</span>
-              {{ artikel.titel }} - {{ artikel.tags }}
-         </a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No articles found. Do not use more than one search term.</p>
-{% endif %}
+  <div id="form-container-suchseite">
+      <form id="searchform" action="" method="get">
+         <button class="searchbutton" type="submit">suchen</button>
+         <input class="searchfield" id="searchbox" name="q"
+                type="text" placeholder="enter search term">
+      </form>
+  </div>
+
+  {% if request.GET %}
+      <div id="ergebnis-h4">
+          <h4>Ergebnisse für tag "{{ request.GET.q }}"</h4>
+      </div>
+  {% endif %}
+
+  {% if artikel_list %}
+      <ul>
+      {% for artikel in artikel_list %}
+           <li class="ergebnis"><a href="/artikel/{{ artikel.a_id }}/">
+                <span class="datum">{{ artikel.datum|date:"Y-m-d" }}</span>
+                {{ artikel.titel }}
+           </a></li>
+      {% endfor %}
+      </ul>
+  {% else %}
+      <p>No articles found. Do not use more than one search term.</p>
+  {% endif %}
+
+</div> <!-- search-container -->
 
 </body>
 </html>

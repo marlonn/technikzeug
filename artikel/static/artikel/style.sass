@@ -1,30 +1,173 @@
-li a
-  text-decoration: none
-  color: #040a70
 
+$font-fg: #e5e5e5
+$bg: #020011
+$art-bg: #112435
+$art-bg-alt: #1F4661
+$ui-link-fg: #DCE616
+$link-fg: #6ca33d
+$art-font: Ubuntu Mono
+$art-font-size: 1.1em
+
+// Eric Meyer's CSS Reset
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video
+  margin: 0
+  padding: 0
+  border: 0
+  font-size: 100%
+  font: inherit
+  vertical-align: baseline
+
+// HTML5 display-role reset for older browsers
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section
+  display: block
+
+body
+  line-height: 1
+
+ol, ul
+  list-style: none
+
+blockquote, q
+  quotes: none
+
+blockquote:before, blockquote:after, q:before, q:after
+  content: ''
+  content: none
+
+table
+  border-collapse: collapse
+  border-spacing: 0
+
+// End of Eric Meyer's CSS Reset
+
+body
+  background-color: $bg
+  font-family: $art-font
+
+h1, h2, h3, h4
+  color: $font-fg
+
+a
+  text-decoration: none
+  color: $ui-link-fg
+
+#search-container
+  margin: 0 0 0 10px
+  width: 700px
+  font-size: $art-font-size
+  margin: auto
+
+#search-container
+  h3
+    font-weight: bold
+    font-size: 1.8em
+    margin: 10px 0 10px 0
+    text-align: center
+
+#ergebnis-h4
+  h4
+    font-weight: bold
+    text-align: center
+    margin: 20px 0 0 0
+
+.ui-link
+  a
+    text-decoration: underline
+    color: $ui-link-fg
+    font-size: $art-font-size
 
 ul
   list-style-type: none
 
-
 .datum
   padding: 0 3px
   display: inline-block
-  width: 125px
-  color: red
+  width: 90px
+  color: $font-fg
 
+.ergebnis
+  margin: 8px 0
+  padding: 4px
+  background-color: $art-bg
+  // width: 100%
+  // display: block
+
+  a
+    width: 100%
+    display: inline-block
+
+.ergebnis:hover
+  background-color: $art-bg-alt
+
+#artikel-backlink
+  margin: 10px 0 0 10px
+  font-size: 1.5em
+  font-weight: bold
+
+#artikel-container
+  background-color: $art-bg
+  padding: 10px
+  margin: auto
+  width: 700px
+
+  h3
+    font-weight: bold
+    font-size: 1.5em
+    margin: 10px 0 10px 0
+
+#artikel-zeile-1
+  display: block
+  height: 1.5em
+
+  .ui-link
+    display: inline-block
+    float: right
+    margin: 0
+
+#artikel
+  h3
+    line-height: 20px
+    margin: 10px 0
+    font-size: 16
+    text-decoration-style: solid
+
+#artikel-datum
+  display: inline-block
+  float: left
+  margin-top: 0px
+  padding: 0px
+  color: $font-fg
+  font-size: $art-font-size
 
 #artikel-text
   width: 700px
   white-space: pre-wrap
-
-
-#artikel-datum
-  margin-top: 10px
-  padding: 5px
-  color: red
-
+  color: $font-fg
+  font-family: $art-font
+  font-size: $art-font-size
 
 #artikel-tags
   padding: 5px
-  color: #040a70
+  color: $font-fg
+
+.artikel-line
+  height: 2px
+  border: none
+  display: block
+  padding: 0px
+  margin: 5 0px
+  background-color: $font-fg
+  // background-color: red

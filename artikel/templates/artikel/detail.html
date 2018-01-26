@@ -1,18 +1,27 @@
 <!doctype html>
 <html>
 <head>
-  {% load static %}
-  <link rel="stylesheet" type="text/css" href="{% static 'artikel/style.css' %}" />
-  <title>technikzeugs - {{ artikel.titel }}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'artikel/style.css' %}" />
+    <title>technikzeugs - {{ artikel.titel }}</title>
 </head>
 <body>
-<div id="artikel-backlink"><a href="/artikel/">zurück</a></div>
-<h3>{{ artikel.titel }}</h3>
-
-<div id="artikel-text">{{ artikel.text }}</div>
-<div id="artikel-datum">{{ artikel.datum }}</div>
-<div id="artikel-tags">{{ artikel.tags }}</div>
-<div><a href="/admin/artikel/artikel/{{ artikel.a_id }}/change/">bearbeiten</a></div>
+<div id="artikel-backlink" class="ui-link">
+    <a href="/artikel/">zurück zu Artikel</a>
+</div>
+<div id="artikel-container">
+  <div id="artikel">
+      <div id="artikel-zeile-1">
+          <div id="artikel-datum">{{ artikel.datum|date:'Y-m-d' }}</div>
+          <div class="ui-link"><a href="/admin/artikel/artikel/{{ artikel.a_id }}/change/">bearbeiten</a></div>
+      </div>
+      <h3>{{ artikel.titel }}</h3>
+      <hr class="artikel-line" />
+      <div id="artikel-text">{{ artikel.text }}</div>
+      <hr class="artikel-line" />
+      <div id="artikel-tags">{{ artikel.tags }}</div>
+  </div>
+</div>
 
 </body>
 </html>

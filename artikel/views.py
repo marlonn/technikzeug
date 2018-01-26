@@ -41,7 +41,8 @@ class SearchView(generic.ListView):
                 #         ).order_by('-datum')
             # else
             result = Artikel.objects.filter(
-                        Q(tags__icontains=query)  |                 Q(titel__icontains=query) |
+                        Q(tags__icontains=query)  |
+                        Q(titel__icontains=query) |
                         Q(text__icontains=query)
                     ).order_by('-datum')
         else:
