@@ -18,7 +18,7 @@
 </div>
 
 {% if request.GET %}
-    <h4>Ergebnisse für tag "{{ request.GET.q }}"</h4>
+    <h4>Ergebnisse f  r tag "{{ request.GET.q }}"</h4>
 {% endif %}
 
 {% if artikel_list %}
@@ -26,14 +26,13 @@
     {% for artikel in artikel_list %}
          <li><a href="/artikel/{{ artikel.a_id }}/">
               <span class="datum">{{ artikel.datum }}</span>
-              {{ artikel.titel|safe }}
+              {{ artikel.titel }}
          </a></li>
     {% endfor %}
     </ul>
 {% else %}
     <p>No articles found.</p>
 {% endif %}
-
 
 </body>
 </html>
