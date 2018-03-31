@@ -51,3 +51,49 @@ class SearchView(generic.ListView):
             #         ).order_by('-datum')[:80]
             result = Artikel.objects.all().order_by('-datum')[:80]
         return result
+
+# ------------------------ drf -------------------------------------------------
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.renderers import JSONRenderer
+from rest_framework.parsers import JSONParser
+from artikel.serializers import ArtikelSerializer
+
+@csrf_exempt
+def artikel_list(request):
+    """List all entries, or create a new one"""
+    if request.method == 'GET':
+        artikel = Artikel.objects.all()
+        serializer = ArtikelSerializer(artikel, many=True)
+        return JsonResponse(serializer.data, safe=False)
+    elif request.method == 'POST':
+        data = JSONParser().parse(request)
+        serializer = ArtikelSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=201)
+        return JsonResponse(serializer.errors, status=400)
+    
+@csrf_exempt
+def artikel_detail(request, pk):
+    """Retrieve, update or delete an entry."""
+    try:
+        artikel = Artikel.objects.get(pk=pk)
+    except Artikel.DoesNotExist:
+        return HttpResponse(status=404)
+
+    if request.method == 'GET':
+        serializer = ArtikelSerializer(artikel)
+        return JsonResponse(serializer.data)
+
+    elif request.method == 'PUT':
+        data = JSONParser().parse(request)
+        serializer = ArtikelSerializer(artikel, data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data)
+        return JsonResponse(serializer.errors, status=400)
+
+    elif request.method == 'DELETE':
+        artikel.delete()
+        return HttpResponse(status=204)
