@@ -19,7 +19,7 @@ class IndexView(generic.ListView):
     context_object_name = 'latest_artikel_list'
 
     def get_queryset(self):
-        """Return the last fifteen published articles."""
+        """Return the last fifty published articles."""
         return Artikel.objects.order_by('-datum')[:50]
 
 class DetailView(generic.DetailView):
@@ -34,28 +34,16 @@ class SearchView(generic.ListView):
         query = self.request.GET.get('q')
         if query:
             query_list = query.split()
-            # if len(query_list) > 1:
-                # this branch does not work. it keeps throwing " 'Q' object has no attribute 'split'"
-                # result = Artikel.objects.filter(
-                #             Q(tags__icontains=item) for item in query_list
-                #         ).order_by('-datum')
-            # else
             result = Artikel.objects.filter(
                         Q(tags__icontains=query)  |
                         Q(titel__icontains=query) |
                         Q(text__icontains=query)
                     ).order_by('-datum')
         else:
-            # result = Artikel.objects.filter(
-            #             datum__lte=timezone.now()
-            #         ).order_by('-datum')[:80]
             result = Artikel.objects.all().order_by('-datum')[:80]
         return result
 
 # ------------------------ drf -------------------------------------------------
-#~ from django.views.decorators.csrf import csrf_exempt
-#~ from rest_framework.renderers import JSONRenderer
-#~ from rest_framework.parsers import JSONParser
 from artikel.serializers import ArtikelSerializer
 from rest_framework import generics
 
