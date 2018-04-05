@@ -21,7 +21,7 @@ class Artikel(models.Model):
     owner = models.ForeignKey(  'auth.User',
                                 related_name='artikel', 
                                 on_delete=models.CASCADE,
-                                null=True
+                                null=False
                             )
 
     class Meta:
