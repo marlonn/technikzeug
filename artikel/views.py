@@ -46,12 +46,31 @@ class SearchView(generic.ListView):
 # ------------------------ drf -------------------------------------------------
 from artikel.serializers import ArtikelSerializer
 from rest_framework import generics
+from rest_framework import permissions
+from artikel.permissions import IsOwnerOrReadOnly
 
 class ArtikelList(generics.ListCreateAPIView):
     queryset = Artikel.objects.all()
     serializer_class = ArtikelSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
         
 class ArtikelDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                            IsOwnerOrReadOnly,)
     queryset = Artikel.objects.all()
     serializer_class = ArtikelSerializer
     
+# ------------------------ user ------------------------------------------------
+from django.contrib.auth.models import User
+from artikel.serializers import UserSerializer
+
+class UserList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+class UserDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
