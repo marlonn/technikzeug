@@ -31,7 +31,7 @@
       {% for artikel in artikel_list %}
            <li class="ergebnis"><a href="/artikel/{{ artikel.a_id }}/">
                 <span class="datum">{{ artikel.datum|date:"Y-m-d" }}</span>
-                {{ artikel.titel }}
+                <span class="titel">{{ artikel.titel }}</span>
            </a></li>
       {% endfor %}
       </ul>

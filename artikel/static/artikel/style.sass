@@ -5,6 +5,7 @@ $art-bg: #112435
 $art-bg-alt: #1F4661
 $ui-link-fg: #DCE616
 $link-fg: #6ca33d
+$red: #ff0000
 $art-font: Ubuntu Mono
 $art-font-size: 1.1em
 
@@ -153,11 +154,12 @@ ul
   font-size: $art-font-size
 
 #artikel-text
-  width: 700px
+  max-width: 700px
   white-space: pre-wrap
   color: $font-fg
   font-family: $art-font
   font-size: $art-font-size
+  padding-bottom: 20px
 
 #artikel-tags
   padding: 5px
@@ -171,3 +173,7 @@ ul
   margin: 5 0px
   background-color: $font-fg
   // background-color: red
+
+p
+    color: $red
+    
