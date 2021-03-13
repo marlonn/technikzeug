@@ -16,9 +16,9 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> django.setup()
 >>> from artikel.models import Artikel
 >>> from django.contrib.auth.models import User
->>> u = User.objects.get(username="Marlon")
+>>> u = User.objects.get(username="marneu")
 >>> u
-<User: Marlon>
+<User: marneu>
 >>> for artikel in Artikel.objects.all():
 ...     artikel.owner = u
 ...     artikel.save()
