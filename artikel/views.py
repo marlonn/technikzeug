@@ -19,7 +19,7 @@ class IndexView(generic.ListView):
     context_object_name = 'latest_artikel_list'
 
     def get_queryset(self):
-        """Return the last fifteen published articles."""
+        """Return the last fifty published articles."""
         return Artikel.objects.order_by('-datum')[:50]
 
 class DetailView(generic.DetailView):
@@ -34,20 +34,43 @@ class SearchView(generic.ListView):
         query = self.request.GET.get('q')
         if query:
             query_list = query.split()
-            # if len(query_list) > 1:
-                # this branch does not work. it keeps throwing " 'Q' object has no attribute 'split'"
-                # result = Artikel.objects.filter(
-                #             Q(tags__icontains=item) for item in query_list
-                #         ).order_by('-datum')
-            # else
             result = Artikel.objects.filter(
                         Q(tags__icontains=query)  |
                         Q(titel__icontains=query) |
                         Q(text__icontains=query)
                     ).order_by('-datum')
         else:
-            # result = Artikel.objects.filter(
-            #             datum__lte=timezone.now()
-            #         ).order_by('-datum')[:80]
             result = Artikel.objects.all().order_by('-datum')[:80]
         return result
+
+# ------------------------ drf -------------------------------------------------
+from artikel.serializers import ArtikelSerializer
+from rest_framework import generics
+from rest_framework import permissions
+from artikel.permissions import IsOwnerOrReadOnly
+
+class ArtikelList(generics.ListCreateAPIView):
+    queryset = Artikel.objects.all()
+    serializer_class = ArtikelSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+        
+class ArtikelDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                            IsOwnerOrReadOnly,)
+    queryset = Artikel.objects.all()
+    serializer_class = ArtikelSerializer
+    
+# ------------------------ user ------------------------------------------------
+from django.contrib.auth.models import User
+from artikel.serializers import UserSerializer
+
+class UserList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+class UserDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer

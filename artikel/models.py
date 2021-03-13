@@ -18,6 +18,11 @@ class Artikel(models.Model):
     tags = models.CharField(max_length=256)
     datum = models.DateField()
     bild = models.CharField(max_length=128, blank=True)
+    owner = models.ForeignKey(  'auth.User',
+                                related_name='artikel', 
+                                on_delete=models.CASCADE,
+                                null=False
+                            )
 
     class Meta:
         managed = True 

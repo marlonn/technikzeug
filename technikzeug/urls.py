@@ -27,3 +27,8 @@ if settings.DEBUG:
     urlpatterns = [
         url(r'^debug/', include(debug_toolbar.urls)),
     ] + urlpatterns
+
+
+urlpatterns += [
+    url(r'^artikel/api-auth/', include('rest_framework.urls')),
+]

@@ -1,0 +1,27 @@
+# This should have been a migration, but I wasn't able to set a default value for
+# the Artikel.owner. Instead, I opened the django shell instead and iterated over
+# every entry in the database.
+# 
+# If the field hadn't been a foreign key, this tutorial would have worked:
+# https://simpleisbetterthancomplex.com/tutorial/2017/09/26/how-to-create-django-data-migrations.html
+
+
+
+$ ./manage.py shell
+Python 3.5.2 (default, Nov 23 2017, 16:37:01) 
+[GCC 5.4.0 20160609] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> import django
+>>> django.setup()
+>>> from artikel.models import Artikel
+>>> from django.contrib.auth.models import User
+>>> u = User.objects.get(username="Marlon")
+>>> u
+<User: Marlon>
+>>> for artikel in Artikel.objects.all():
+...     artikel.owner = u
+...     artikel.save()
+... 
+>>> 
+
