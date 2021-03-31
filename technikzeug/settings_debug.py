@@ -52,7 +52,7 @@ MIDDLEWARE = [
 ]
 
 if DEBUG:
-   INTERNAL_IPS = ('127.0.0.1', 'localhost', '10.98.228.62', '10.98.228.145', '10.98.228.35', '10.0.1.11', '10.0.1.2',)
+   INTERNAL_IPS = ('127.0.0.1', 'localhost', '10.98.228.62', '10.98.228.145', '10.98.228.35', '10.98.228.171', '10.0.1.11', '10.0.1.2',)
    MIDDLEWARE += (
        'debug_toolbar.middleware.DebugToolbarMiddleware',
    )

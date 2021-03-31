@@ -28,10 +28,13 @@
   {% if artikel_list %}
       <ul>
       {% for artikel in artikel_list %}
-           <li class="ergebnis"><a href="/artikel/{{ artikel.a_id }}/">
+           <li class="ergebnis" id="{{ artikel.a_id }}">
+<!--                 <a href="/artikel/{{ artikel.a_id }}/" id="{{ artikel.a_id }}"> -->
                 <span class="datum">{{ artikel.datum|date:"Y-m-d" }}</span>
                 <span class="titel">{{ artikel.titel }}</span>
-           </a></li>
+<!--                 </a> -->
+                <div class="txt"></div>
+           </li>
       {% endfor %}
       </ul>
   {% else %}
@@ -40,5 +43,53 @@
 
 </div> <!-- search-container -->
 
+<script>
+    // this allows you to enter search terms directly after loading the page
+    document.getElementById('searchbox').focus();
+
+    // just a sanity check
+//     function bgColorHover(){
+//         this.style = "background-color: blue;"
+//     }
+//     document.querySelectorAll('.ergebnis').forEach(el => {
+//         el.addEventListener('mouseover', bgColorHover);
+//     });
+    
+    function getArtikelText(id){
+        fetch('http://10.98.228.171/artikel/api/' + id + '?json')
+        .then(response => response.json()) 
+        .then(responseData => {
+//             console.log(responseData);
+//             console.log(responseData.titel);
+//             console.log(responseData.text);
+            return responseData.text;
+        });
+    }
+    function attachArtikelText(id){
+        fetch('http://10.98.228.171/artikel/api/' + id + '?json')
+        .then(response => response.json()) 
+        .then(responseData => {
+            let elErgebnis = document.getElementById(id);
+//             elErgebnis.style = "background-color: darkblue; color: white;"
+            let div = elErgebnis.getElementsByClassName("txt")[0];
+            console.log(div);
+            div.innerHTML = responseData.text;
+        });
+    }
+    function attachOnClick(){
+        let id = this.id;
+        console.log("attachOnClick id: " + id);
+        if(this.getElementsByClassName("txt")[0].innerHTML){
+            // if user clicks again, remove artikel-text
+            this.getElementsByClassName("txt")[0].innerHTML = "";
+        }else{
+            // display artikel-text, accordion-style
+            attachArtikelText(id);
+        }
+    }
+    document.querySelectorAll('.ergebnis').forEach(el => {
+        el.addEventListener('click', attachOnClick);
+    });
+</script>
 </body>
 </html>
