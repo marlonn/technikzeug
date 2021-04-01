@@ -58,17 +58,20 @@
 //     document.querySelectorAll('.ergebnis').forEach(el => {
 //         el.addEventListener('mouseover', bgColorHover);
 //     });
+
     function getArtikelText(id){
     // returns a promise; call function with getArtikelText(id).then()
         return fetch('http://10.98.228.171/artikel/api/' + id + '?json')
         .then(response => response.json()) 
-        .then(json => (json.text))
+        .then(json => json.text)
     }
     function attachOnClick(e){
         if(e.target.tagName == "LI"){
             target = e.target;
-        }else{
+        }else if (e.target.tagName == "SPAN"){
             target = e.target.parentNode;
+        }else if (e.target.tagName == "DIV"){
+            target = e.target.parentNode.parentNode;
         }
         let id = target.id;
         let divWrapper = target.getElementsByClassName("txt-wrapper")[0];
