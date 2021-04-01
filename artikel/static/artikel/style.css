@@ -53,7 +53,7 @@ a {
 #search-container {
   margin: 0 0 0 10px;
   width: 700px;
-  font-size: 1.1em;
+  font-size: 1.05em;
   margin: auto; }
 
 #search-container h3 {
@@ -70,7 +70,7 @@ a {
 .ui-link a {
   text-decoration: underline;
   color: #DCE616;
-  font-size: 1.1em; }
+  font-size: 1.05em; }
 
 ul {
   list-style-type: none; }
@@ -88,6 +88,10 @@ ul {
   .ergebnis a {
     width: 100%;
     display: inline-block; }
+  .ergebnis .titel {
+    text-decoration: none;
+    color: #DCE616;
+    font-size: 1.05em; }
 
 .ergebnis:hover {
   background-color: #1F4661; }
@@ -127,14 +131,14 @@ ul {
   margin-top: 0px;
   padding: 0px;
   color: #e5e5e5;
-  font-size: 1.1em; }
+  font-size: 1.05em; }
 
 #artikel-text {
   max-width: 700px;
   white-space: pre-wrap;
   color: #e5e5e5;
   font-family: Ubuntu Mono;
-  font-size: 1.1em;
+  font-size: 1.05em;
   padding-bottom: 20px; }
 
 #artikel-tags {
@@ -149,7 +153,15 @@ ul {
   margin: 5 0px;
   background-color: #e5e5e5; }
 
+.txt {
+  max-width: 700px;
+  white-space: pre-wrap;
+  color: #e5e5e5;
+  font-family: Ubuntu Mono;
+  font-size: 1em;
+  padding-bottom: 15px; }
+
 p {
   color: #ff0000; }
 
-/* sourceMappingURL=style.css.map */
+/*# sourceMappingURL=style.css.map */

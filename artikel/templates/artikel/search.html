@@ -34,7 +34,10 @@
                 <span class="datum">{{ artikel.datum|date:"Y-m-d" }}</span>
                 <span class="titel">{{ artikel.titel }}</span>
 <!--                 </a> -->
-                <div class="txt"></div>
+                <div class="txt-wrapper" style="display: none;">
+                    <hr class="artikel-line" />
+                    <div class="txt"></div>
+                </div>
            </li>
       {% endfor %}
       </ul>
@@ -67,16 +70,20 @@
         }else{
             target = e.target.parentNode;
         }
-        
         let id = target.id;
-        let div = target.getElementsByClassName("txt")[0];
-        if(div.innerHTML){
+        let divWrapper = target.getElementsByClassName("txt-wrapper")[0];
+        let divTxt = divWrapper.getElementsByClassName("txt")[0];
+        if(divTxt.innerHTML){
             // if user clicks again, remove artikel-text
-            div.innerHTML = "";
+            divTxt.innerHTML = "";
+            divWrapper.style = "display: none;";
         }else{
             // display artikel-text, accordion-style
             getArtikelText(id)
-            .then(txt => { div.innerHTML = txt; });
+            .then(txt => { 
+                divTxt.innerHTML = txt;
+                divWrapper.style = "";
+            });
         }
     }
 //     document.querySelectorAll('.ergebnis').forEach(el => {

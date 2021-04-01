@@ -7,7 +7,7 @@ $ui-link-fg: #DCE616
 $link-fg: #6ca33d
 $red: #ff0000
 $art-font: Ubuntu Mono
-$art-font-size: 1.1em
+$art-font-size: 1.05em
 
 // Eric Meyer's CSS Reset
 html, body, div, span, applet, object, iframe,
@@ -109,6 +109,10 @@ ul
   a
     width: 100%
     display: inline-block
+  .titel  
+    text-decoration: none
+    color: $ui-link-fg
+    font-size: $art-font-size
 
 .ergebnis:hover
   background-color: $art-bg-alt
@@ -174,6 +178,14 @@ ul
   background-color: $font-fg
   // background-color: red
 
+.txt
+  max-width: 700px
+  white-space: pre-wrap
+  color: $font-fg
+  font-family: $art-font
+  font-size: 1em
+  padding-bottom: 15px
+  
 p
-    color: $red
+  color: $red
     
