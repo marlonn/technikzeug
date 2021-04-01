@@ -45,7 +45,7 @@
 </div> <!-- search-container -->
 
 <script>
-    // this allows you to enter search terms directly after loading the page
+    // this allows user to enter search terms directly after loading the page
     document.getElementById('searchbox').focus();
 
     // just a sanity check
@@ -55,42 +55,36 @@
 //     document.querySelectorAll('.ergebnis').forEach(el => {
 //         el.addEventListener('mouseover', bgColorHover);
 //     });
-    
     function getArtikelText(id){
-        fetch('http://10.98.228.171/artikel/api/' + id + '?json')
+    // returns a promise; call function with getArtikelText(id).then()
+        return fetch('http://10.98.228.171/artikel/api/' + id + '?json')
         .then(response => response.json()) 
-        .then(responseData => {
-//             console.log(responseData);
-//             console.log(responseData.titel);
-//             console.log(responseData.text);
-            return responseData.text;
-        });
+        .then(json => (json.text))
     }
-    function attachArtikelText(id){
-        fetch('http://10.98.228.171/artikel/api/' + id + '?json')
-        .then(response => response.json()) 
-        .then(responseData => {
-            let elErgebnis = document.getElementById(id);
-//             elErgebnis.style = "background-color: darkblue; color: white;"
-            let div = elErgebnis.getElementsByClassName("txt")[0];
-            console.log(div);
-            div.innerHTML = responseData.text;
-        });
-    }
-    function attachOnClick(){
-        let id = this.id;
-        console.log("attachOnClick id: " + id);
-        if(this.getElementsByClassName("txt")[0].innerHTML){
+    function attachOnClick(e){
+        if(e.target.tagName == "SPAN"){
+            target = e.target.parentNode;
+        }else{
+            target = e.target;
+        }
+        let id = target.id;
+        let div = target.getElementsByClassName("txt")[0];
+        if(div.innerHTML){
             // if user clicks again, remove artikel-text
-            this.getElementsByClassName("txt")[0].innerHTML = "";
+            div.innerHTML = "";
         }else{
             // display artikel-text, accordion-style
-            attachArtikelText(id);
+            getArtikelText(id).then(txt => {
+                div.innerHTML = txt;
+            });
         }
     }
-    document.querySelectorAll('.ergebnis').forEach(el => {
-        el.addEventListener('click', attachOnClick);
-    });
+//     document.querySelectorAll('.ergebnis').forEach(el => {
+//         el.addEventListener('click', attachOnClick);
+//     });
+    // using event object to attach callback function to one <ul> instead of 50 <li>
+    let ul = document.getElementsByTagName('ul')[0];
+    ul.addEventListener('click', e => { attachOnClick(e) }, false);
 </script>
 </body>
 </html>
