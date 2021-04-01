@@ -62,11 +62,12 @@
         .then(json => (json.text))
     }
     function attachOnClick(e){
-        if(e.target.tagName == "SPAN"){
-            target = e.target.parentNode;
-        }else{
+        if(e.target.tagName == "LI"){
             target = e.target;
+        }else{
+            target = e.target.parentNode;
         }
+        
         let id = target.id;
         let div = target.getElementsByClassName("txt")[0];
         if(div.innerHTML){
@@ -74,9 +75,8 @@
             div.innerHTML = "";
         }else{
             // display artikel-text, accordion-style
-            getArtikelText(id).then(txt => {
-                div.innerHTML = txt;
-            });
+            getArtikelText(id)
+            .then(txt => { div.innerHTML = txt; });
         }
     }
 //     document.querySelectorAll('.ergebnis').forEach(el => {
