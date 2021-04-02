@@ -148,10 +148,11 @@ sudo gem install sass --no-user-install
 
 ### example request to api
 
+```bash
 http http://10.98.228.35/artikel/api/416/?json
 
 http -a marneu:[marneu password] POST http://10.98.228.35/artikel/api/ titel="cli-test" text="testestetsetset" tags="test" datum="2021-03-13"
-
+```
 
 ### executing migration from commits 8bae1c6 and 676dbf5
 
