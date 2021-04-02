@@ -13,7 +13,7 @@ document.getElementById('searchbox').focus();
 
 function getArtikelText(id){
 // returns a promise; call function with getArtikelText(id).then()
-    return fetch('http://10.98.228.171/artikel/api/' + id + '?json')
+    return fetch('http://10.98.228.35/artikel/api/' + id + '?json')
     .then(response => response.json()) 
     .then(json => json.text)
 }
