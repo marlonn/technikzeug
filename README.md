@@ -178,3 +178,11 @@ virtualenv/bin/python3 manage.py collectstatic
 # os-container doesn't shut down normally anymore, probably because of uwsgi being started through /etc/rc.local
 lxc restart django-cyan --force
 ```
+
+**pull in changes from dev server**
+```bash
+git pull
+# might have to change urls in some files, e.g. api-url in search.js
+virtualenv/bin/python3 manage.py collectstatic
+sudo service nginx restart
+```
