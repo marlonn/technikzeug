@@ -178,3 +178,14 @@ virtualenv/bin/python3 manage.py collectstatic
 # os-container doesn't shut down normally anymore, probably because of uwsgi being started through /etc/rc.local
 lxc restart django-cyan --force
 ```
+
+### start dev-server
+
+The development server has to be started manually.
+```bash
+su ubuntu
+cd /home/ubuntu/site-dev
+# The new js-functions would have to be rewritten if runserver used port 8000.
+# Have to use sudo to use port 80
+sudo virtualenv/bin/python3 manage.py runserver --settings=technikzeug.settings_debug 0.0.0.0:80
+```
