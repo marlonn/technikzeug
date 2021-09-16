@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
@@ -9,7 +9,6 @@ from .models import Artikel
 from django.http import HttpResponse
 from django.utils import timezone
 from django import forms
-from django.shortcuts import redirect, render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.db.models import Q
 
