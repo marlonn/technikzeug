@@ -185,4 +185,14 @@ git pull
 # might have to change urls in some files, e.g. api-url in search.js
 virtualenv/bin/python3 manage.py collectstatic
 sudo service nginx restart
+
+### start dev-server
+
+The development server has to be started manually.
+```bash
+su ubuntu
+cd /home/ubuntu/site-dev
+# The new js-functions would have to be rewritten if runserver used port 8000.
+# Have to use sudo to use port 80
+sudo virtualenv/bin/python3 manage.py runserver --settings=technikzeug.settings_debug 0:80
 ```
