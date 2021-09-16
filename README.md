@@ -131,7 +131,7 @@ git push -u origin master
 ### sass
 
 ```sh
-# used to use the ruby version, but since I'm planning to use React, might as install those hundreds of node modules
+# used to use the ruby version, but since I'm planning to use React, might as well install those hundreds of node modules
 sudo apt install --no-install-recommends npm
 sudo npm install --global n
 sudo n 14
@@ -167,6 +167,7 @@ http -a marneu:[marneu password] POST http://10.98.228.35/artikel/api/ titel="cl
 - http://10.98.228.35/artikel/354/
 - https://uwsgi-docs.readthedocs.io/en/latest/tutorials/Django_and_nginx.html#make-uwsgi-startup-when-the-system-boots
 - https://vpsfix.com/community/server-administration/no-etc-rc-local-file-on-ubuntu-18-04-heres-what-to-do/
+
 ```sh
 # static content
 cd /home/ubuntu/site-dev 
@@ -180,12 +181,12 @@ sudo chmod +x /etc/rc.local
 
 # nginx 
 sudo cp technikzeug_nginx.conf /etc/nginx/sites-available/technikzeug
-sudo ln -s /etc/nginx/sites-available/technikzeug.conf /etc/nginx/sites-enabled/technikzeug
+sudo ln -s /etc/nginx/sites-available/technikzeug /etc/nginx/sites-enabled/technikzeug
 
 # os-container doesn't shut down normally anymore, probably because of uwsgi being started through /etc/rc.local
 lxc restart django-cyan --force
 
-# site should now be available at [lxc-IP]/artikel/
+# site should now be available at 10.98.228.35/artikel/ (internal ip)
 ```
 
 **pull in changes from dev server**
