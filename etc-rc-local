@@ -1,4 +1,0 @@
-#!/bin/sh -e
-/usr/local/bin/uwsgi --ini /home/ubuntu/site-dev/technikzeug_uwsgi.ini --uid ubuntu --gid ubuntu --daemonize /var/log/uwsgi.log
-
-exit 0 

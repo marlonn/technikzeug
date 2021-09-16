@@ -1,0 +1,6 @@
+#!/bin/sh -e
+
+# copy of /etc/rc.local
+/usr/local/bin/uwsgi --ini /home/ubuntu/site-dev/technikzeug_uwsgi.ini --uid ubuntu --gid ubuntu 
+
+exit 0 
