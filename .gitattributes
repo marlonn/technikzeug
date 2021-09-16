@@ -1,2 +1,2 @@
-static/* linguist-generated
-*pyc linguist-detectable false
+static/** linguist-generated
+*.pyc linguist-detectable=false
