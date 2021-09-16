@@ -1,24 +1,21 @@
-# django-cyan documentation
+# Technikzeug
 
 ### What is this?
 
-This is the public documentation for django-cyan, a virtualized Ubuntu server. It runs
-as a lxd container on host Abraxas and serves a CRUD app using mysql, django
-and nginx. Based on container "cyan" that runs the same content with procedural php
-and apache.
-Passwords and some usernames and email addresses are saved in a previous version of this document, renamed to "README_sensitive.md". It's still in the development server's project directory but purged from git.
+This is the public documentation Technikzeugs, a tech-related weblog for personal use. It's running in a
+lxc container on host Abraxas and uses mariadb, django, django rest framework and nginx. Based on rynnon-php, which was developed with procedural php, mariadb and apache.
 
 ### to do
 
-- Suche mit mehreren Keywords implementieren (z.b. "enthält 'git' und 'python'"; momentan geht nur "enthält 'git python'")
-- Bilder anzeigen
-- in search-View auf detail-View verlinken
+- implement search with multiple keywords
+- show article images
+- link search view to detail view
 
 ### current frontends
 
 - localhost/artikel/
 - localhost/admin/ # django's admin site
-- localhost/artikel/api/ # drf's browsable api
+- localhost/artikel/api/ # django rest framework's browsable api
 
 ### database
 
@@ -26,9 +23,11 @@ database: mysql (provided by package mariadb)
 
 database name: phpmyadmin
 
+database user: phpmyadmin
+
 ### database backup
 
-```bash
+```sh
 mysqldump -u [username] -p [databasename] > database-backup.sql
 ```
 
@@ -36,9 +35,7 @@ mysqldump -u [username] -p [databasename] > database-backup.sql
 
 **nginx**
 
-ugh.
-
-```bash
+```sh
 sudo service apache2 stop
 sudo apt install nginx-common
 sudo rm /etc/nginx/sites-enabled/default
@@ -46,35 +43,27 @@ sudo apt install nginx-core nginx
 sudo service apache2 start
 ```
 
-**snapd**
-
-doesn't work at all, i guess because it has to run on debian stretch's
-4.9 kernel? weird.
-
 **python and django**
 
-I used the official guide: https://docs.djangoproject.com/en/1.11/topics/install/
-
-... and a bit of https://www.obeythetestinggoat.com/book/pre-requisite-installations.html
-
-```bash
+```sh
 sudo apt install python3-pip
 sudo apt install python3-venv
+mkdir ~/site-dev
 cd ~/site-dev
-python3 -m venv virtualenv
+virtualenv virtualenv
 . virtualenv/bin/activate
 pip install --upgrade pip
-pip install "django<1.12" setuptools
+pip install "django==3.2.7" setuptools
 django-admin.py startproject technikzeug .
 ```
 
 add this to settings.py for database access:
-```bash
+```sh
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'phpmyadmin',
-        'USER': '[username]',
+        'USER': 'phpmyadmin',
         'PASSWORD': '[password]',
         'HOST': '127.0.0.1',
         'PORT': '',
@@ -83,7 +72,7 @@ DATABASES = {
 ```
 
 `pip install mysqclient` keeps failing. This is what I've done, not quite sure what did the trick:
-```bash
+```sh
 sudo ln -s /usr/local/mysql/bin/mysql_config /usr/bin/mysql_config
 sudo apt install libmysqlclient-dev
 (virtualenv) $ pip install --upgrade setuptools
@@ -97,7 +86,7 @@ NOW begins the real fun! Let's try to use cyan's old database.
 - https://docs.djangoproject.com/en/1.11/howto/legacy-databases/#auto-generate-the-models
 - https://docs.djangoproject.com/en/1.11/ref/django-admin/#django-admin-inspectdb
 
-```bash
+```sh
 ./manage.py inspectdb artikel > models.py
 ./manage.py startapp artikel
 mv models.py artikel/models.py
@@ -120,14 +109,14 @@ Password: [admin password]
 Register model in admin: https://docs.djangoproject.com/en/1.11/intro/tutorial02/#make-the-poll-app-modifiable-in-the-admin
 
 Now, we can start the development server and browse the database content at localhost/admin:
-```bash
-sudo virtualenv/bin/python3 manage.py runserver 0.0.0.0:80
+```sh
+sudo virtualenv/bin/python3 manage.py runserver 0:80
 firefox 10.98.288.35/admin
 ```
 
 ### git setup (bitbucket)
 
-```bash
+```sh
 cd ~/site-dev
 git remote add origin git@bitbucket.org:marneu/technikzeugs.git
 git config --global user.name "marneu"
@@ -141,14 +130,21 @@ git push -u origin master
 
 ### sass
 
-```bash
-sudo apt --no-install-recommends ruby ruby-dev build-essentials
-sudo gem install sass --no-user-install
+```sh
+# used to use the ruby version, but since I'm planning to use React, might as install those hundreds of node modules
+sudo apt install --no-install-recommends npm
+sudo npm install --global n
+sudo n 14
+PATH="$PATH"
+sudo npm install --global sass
+# let's try sass:
+cd artikel/static/artikel
+sass --watch style.sass style.css
 ```
 
 ### example request to api
 
-```bash
+```sh
 http http://10.98.228.35/artikel/api/416/?json
 
 http -a marneu:[marneu password] POST http://10.98.228.35/artikel/api/ titel="cli-test" text="testestetsetset" tags="test" datum="2021-03-13"
@@ -157,11 +153,12 @@ http -a marneu:[marneu password] POST http://10.98.228.35/artikel/api/ titel="cl
 ### executing migration from commits 8bae1c6 and 676dbf5
 
 ```bash
-virtualenv/bin/python3 manage.py migrate
+. .virtualenv/bin/activate
+./manage.py migrate
 # migration 003 works, 004 fails
-virtualenv/bin/python3 manage.py shell
-# do things outlined in manual_migration.txt
-virtualenv/bin/python3 manage.py migrate
+./manage.py shell
+# do things outlined in manual_migration.txt, then
+./manage.py migrate
 # migration 004 works
 ```
 
@@ -170,19 +167,41 @@ virtualenv/bin/python3 manage.py migrate
 - http://10.98.228.35/artikel/354/
 - https://uwsgi-docs.readthedocs.io/en/latest/tutorials/Django_and_nginx.html#make-uwsgi-startup-when-the-system-boots
 - https://vpsfix.com/community/server-administration/no-etc-rc-local-file-on-ubuntu-18-04-heres-what-to-do/
-```bash
+```sh
 # static content
 cd /home/ubuntu/site-dev 
 mkdir static
 virtualenv/bin/python3 manage.py collectstatic
+
+# uwsgi
+sudo pip install uwsgi
+sudo cp etc-rc.local /etc/rc.local
+sudo chmod +x /etc/rc.local
+
+# nginx 
+sudo cp technikzeug_nginx.conf /etc/nginx/sites-available/technikzeug
+sudo ln -s /etc/nginx/sites-available/technikzeug.conf /etc/nginx/sites-enabled/technikzeug
+
 # os-container doesn't shut down normally anymore, probably because of uwsgi being started through /etc/rc.local
 lxc restart django-cyan --force
+
+# site should now be available at [lxc-IP]/artikel/
 ```
 
 **pull in changes from dev server**
-```bash
+```sh
 git pull
 # might have to change urls in some files, e.g. api-url in search.js
 virtualenv/bin/python3 manage.py collectstatic
 sudo service nginx restart
+
+### start dev-server
+
+The development server has to be started manually.
+```bash
+su ubuntu
+cd /home/ubuntu/site-dev
+# The new js-functions would have to be rewritten if runserver used port 8000.
+# Have to use sudo to use port 80
+sudo virtualenv/bin/python3 manage.py runserver --settings=technikzeug.settings_debug 0:80
 ```
